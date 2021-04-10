@@ -1018,6 +1018,10 @@ def read_deferred_data_element(fileobj_type, filename_or_obj, timestamp,
     logger.debug("Reading deferred element %r" % str(raw_data_elem.tag))
     # If it wasn't read from a file, then return an error
     if filename_or_obj is None:
+        raw = RawDataElement(tag=raw_data_elem.tag, VR=None, length=4, value=b'deferred', value_tell=0, is_implicit_VR=0, is_little_endian=True, is_raw=True)
+        # raw_data_elem.value = 'Deferred'
+        return raw_data_elem
+        # MJC
         raise IOError("Deferred read -- original filename not stored. "
                       "Cannot re-open")
     is_filename = isinstance(filename_or_obj, str)

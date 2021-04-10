@@ -681,7 +681,9 @@ class IS(int):
         # and will raise error. E.g. IS(Decimal('1')) is ok, but not IS(1.23)
         #   IS('1.23') will raise ValueError
         if isinstance(val, (float, Decimal, str)) and newval != float(val):
-            raise TypeError("Could not convert value to integer without loss")
+            warnings.warn(f"Could not convert value '{val}' to integer without loss")
+            newval = float(val)
+            # raise TypeError(f"Could not convert value '{val}' to integer without loss")
 
         # Checks in case underlying int is >32 bits, DICOM does not allow this
         if not -2**31 <= newval < 2**31 and config.enforce_valid_values:
